@@ -16,7 +16,7 @@ struct
 {
     bool operator()(const shared_ptr<Unit>& u1, const shared_ptr<Unit>& u2) const
     {
-        return u1->getSpeed() < u2->getSpeed();
+        return u1->getSpeed() > u2->getSpeed();
     }
 }
 battleLess;
