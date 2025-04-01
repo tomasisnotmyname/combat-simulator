@@ -29,7 +29,7 @@ using namespace std;
 
 void print_units( const vector<shared_ptr<Unit>>& units )
 {
-    cout << '\n' << setw(10) << "UNITS"
+    cout << setw(10) << "UNITS"
          << setw(5) << "HP"
          << setw(9) << " DAMAGE "
          << setw(6) << "SPEED" << endl;

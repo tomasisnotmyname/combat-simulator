@@ -29,16 +29,21 @@ void battle(vector<shared_ptr<Unit>>& units, int round_limit)
     sort( units.begin(), units.end(), battleLess);
 
     int rounds = 0;
+    // end_battle allows to ensure battle ends if there is no one alive.
+    bool end_battle = false;
 
     uniform_int_distribution<> dist(0, units.size()-1);
-    while( rounds++ != round_limit)
+    while( rounds++ != round_limit && end_battle != true )
     {
-        cout << "Round " << rounds << endl;
+        end_battle = true;
+
+        cout << "Round " << rounds << "------" << endl;
         for ( vector<Unit>::size_type i = 0 ; i < units.size() ; i++ )
         {
             shared_ptr<Unit> attacker = units[i];
             if( attacker->isAlive() && units.size() != 1)
             {
+                end_battle = false;
                 shared_ptr<Unit> defender;
                 unsigned int random_i = dist(gen);
 
@@ -63,10 +68,16 @@ void battle(vector<shared_ptr<Unit>>& units, int round_limit)
                 // If the only alive unit is the attacker, battle ends.
                 if( (defender = units[random_i]) == attacker )
                 {
-                    return;
+                    cout << attacker->getName() << " is the only one left alive." << endl;
+                    end_battle = true;
+                    break;
                 }
-                attack(attacker,defender, gen);
+                else
+                {
+                    attack(attacker,defender, gen);
+                }
             }
         }
     }
+    cout << "Battle has concluded.\n" << endl;
 }
